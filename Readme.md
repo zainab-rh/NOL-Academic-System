@@ -4,7 +4,7 @@
 
 ---
 
-### 🚀 Key Features
+###  Key Features
 * **Role-Based Ecosystem:** Implements specialized dashboards for **Students** and **Professors** using Tomcat's container-managed security (`rolalu` and `rolpro`).
 * **Dynamic Grade Management:** Allows professors to retrieve subject lists and update student grades in real-time via RESTful API calls.
 * **Automated PDF Certification:** Generates official academic transcripts using **Apache PDFBox**, complete with student avatars and formatted course data.
@@ -13,14 +13,14 @@
 * **Automated Data Population**: A comprehensive Bash suite utilizing **curl** and **jq** to simulate a realistic academic environment by programmatically initializing subjects, professors, and student enrollments.
 
 
-### 🛠 Technical Stack
+### Technical Stack
 * **Backend:** Java (Jakarta EE Servlets).
 * **Frontend:** JSP, Bootstrap 5, HTML5, CSS3, and JavaScript (Fetch API).
 * **Server:** Apache Tomcat 10.1.
 * **Libraries:** `OkHttp` (Networking), `Gson` (JSON Parsing), and `Apache PDFBox` (PDF Generation).
 
 
-### ⚙️ Setup & Installation
+### Setup & Installation
 1.  **Tomcat Configuration:** Integrate the user roles defined in `tomcat-users.xml` into your local Tomcat instance.
 2.  **Deployment:** Build the project and deploy the generated WAR file to **Apache Tomcat 10.1**.
 3.  **Environment Population:** Initialize the academic database by running the automated suite:
