@@ -1,0 +1,82 @@
+.header-area {
+  height: 100px;
+  background-image: url("../images/banner-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+
+.header-sticky {
+  top: 0;
+}
+
+
+
+/* Quitar márgenes por defecto */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Espaciador después del header sticky */
+.header-spacer {
+  height: 70px;
+}
+
+/* Header visual con sombra */
+.custom-header {
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+/* Login box moderna */
+.login-box {
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Altura mínima para centrar contenido */
+.min-vh-70 {
+  min-height: 70vh;
+}
+
+/* Botón personalizado */
+#form-submit {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Preloader opcional (puedes ocultarlo si no lo usas) */
+#js-preloader {
+  display: none;
+}
+
+.section-heading h6{
+	font-size: 30px;
+}
+
+.section-heading h2{
+	font-size: 20px;
+}
+
+.asignatura-card {
+  max-width: 320px;
+  margin: 0 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid transparent;
+}
+
+.asignatura-card:hover {
+  border: 2px solid #7a6ad8;
+  box-shadow: 0 0 10px rgba(13, 110, 253, 0.3);
+}

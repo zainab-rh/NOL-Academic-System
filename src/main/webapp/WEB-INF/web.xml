@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" id="WebApp_ID" version="6.0">
+	<display-name>NotasOnline</display-name>
+	
+	<!-- Ruta del archivo generado por Logs -->
+	<context-param>
+		<param-name>logFilePath</param-name>
+		<param-value>/tmp/nol_access_reg.log</param-value>
+	</context-param>
+	
+	<welcome-file-list>
+	    <welcome-file>index.html</welcome-file>
+	    <welcome-file>index.jsp</welcome-file>
+	    <welcome-file>index.htm</welcome-file>
+	    <welcome-file>default.html</welcome-file>
+	    <welcome-file>default.jsp</welcome-file>
+	    <welcome-file>default.htm</welcome-file>
+	</welcome-file-list>
+	
+	<security-role>
+	    <role-name>rolpro</role-name>
+	</security-role>
+	<security-role>
+	    <role-name>rolalu</role-name>
+	</security-role>
+		
+	<security-constraint>
+	  <web-resource-collection>
+	    <web-resource-name>Alumnos</web-resource-name>
+	    <url-pattern>/alumno/*</url-pattern>
+	  </web-resource-collection>
+	  <auth-constraint>
+	    <role-name>rolalu</role-name>
+	  </auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+	  <web-resource-collection>
+	    <web-resource-name>Profesores</web-resource-name>
+	    <url-pattern>/profesor/*</url-pattern>
+	  </web-resource-collection>
+	  <auth-constraint>
+	    <role-name>rolpro</role-name>
+	  </auth-constraint>
+	</security-constraint>
+	
+	
+	<login-config>
+	    <auth-method>FORM</auth-method>
+	    <form-login-config>
+	        <form-login-page>/login.jsp</form-login-page>
+	        <form-error-page>/pages/Error.jsp</form-error-page>
+	    </form-login-config>
+	</login-config>
+	
+	<!-- Definición de Filtros -->
+	<filter>
+	  <filter-name>Logs</filter-name>
+	  <filter-class>nol.Filters.Logs</filter-class>
+	</filter>
+	
+	<!-- Mapeado de Filtros -->
+	<filter-mapping>
+	  <filter-name>Logs</filter-name>
+	  <url-pattern>/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<session-config>
+	  <session-timeout>60</session-timeout>
+	</session-config> 
+	
+	<!-- Definición de servlets -->
+	<servlet>
+	<servlet-name>InfoAsignaturas</servlet-name>
+	<servlet-class>nol.Servlets.InfoAsignaturas</servlet-class>
+	</servlet>
+
+	<servlet>
+	<servlet-name>Auth</servlet-name>
+	<servlet-class>nol.Servlets.Auth</servlet-class>
+	</servlet>
+
+	<servlet>
+	<servlet-name>LogOut</servlet-name>
+	<servlet-class>nol.Servlets.LogOut</servlet-class>
+	</servlet>
+	
+	<servlet>
+	<servlet-name>Generar-Certificado</servlet-name>
+	<servlet-class>nol.Servlets.PDFGen</servlet-class>
+	</servlet>
+	
+	<servlet>
+	<servlet-name>AsignaturasProfesor</servlet-name>
+	<servlet-class>nol.Servlets.AsignaturasProfesor</servlet-class>
+	</servlet>
+
+	<servlet>
+	<servlet-name>AlumnosAsignatura</servlet-name>
+	<servlet-class>nol.Servlets.AlumnosAsignatura</servlet-class>
+	</servlet>
+	
+	<servlet>
+	<servlet-name>GetAlumno</servlet-name>
+	<servlet-class>nol.Servlets.GetAlumno</servlet-class>
+	</servlet>
+	
+	<!-- Mapeado de servlets -->
+	<servlet-mapping>
+	<servlet-name>InfoAsignaturas</servlet-name>
+	<url-pattern>/alumno/asignaturas</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+	<servlet-name>Auth</servlet-name>
+	<url-pattern>/auth</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+	<servlet-name>LogOut</servlet-name>
+	<url-pattern>/cerrar-sesion</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+	<servlet-name>Generar-Certificado</servlet-name>
+	<url-pattern>/Generar-pdf-alumno</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+	<servlet-name>AsignaturasProfesor</servlet-name>
+	<url-pattern>/profesor/asignaturas</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+	<servlet-name>AlumnosAsignatura</servlet-name>
+	<url-pattern>/detallesAsignatura</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+	<servlet-name>GetAlumno</servlet-name>
+	<url-pattern>/getAlumno</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Mapeado de errores -->
+	<error-page>
+		<error-code>403</error-code>
+		<location>/pages/Error.jsp</location>
+	</error-page>
+
+</web-app>

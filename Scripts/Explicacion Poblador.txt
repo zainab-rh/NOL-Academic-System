@@ -1,0 +1,48 @@
+El script poblador contiene 3 arrays que almacenan objetos JSON: profesores, alumnos y asignaturas. Estos datos se utilizan para enviar peticiones HTTP al servidor del Centro Educativo con el objetivo de poblar su base de datos.
+
+Concretamente, el script realiza las siguientes acciones:
+	1.	Autenticación:
+	•	Se ejecuta un curl con una petición POST al endpoint /login para iniciar sesión como administrador.
+	•	Se guarda una clave (key) de acceso para autenticar las siguientes peticiones.
+	2.	Añadir asignaturas:
+	•	Se recorre el array asignaturas.
+	•	Por cada elemento, se hace una petición POST con curl al endpoint /asignaturas.
+	•	Si la respuesta es “OK”, se imprime en verde.
+	•	Si hay un error, se imprime un mensaje en naranja con el contenido de la asignatura.
+	3.	Añadir alumnos:
+	•	Se recorre el array alumnos.
+	•	Se hace un POST al endpoint /alumnos.
+	•	Se muestra el resultado por pantalla (verde si fue exitoso, naranja si hubo error).
+	4.	Añadir profesores:
+	•	Se recorre el array profesores.
+	•	Se hace un POST al endpoint /profesores.
+	•	Si fue exitoso, se toma su DNI y se asigna al profesor una asignatura de forma rotativa (una por cada profesor).
+	•	Esto se realiza con otro curl POST al endpoint /asignaturas/{acronimo}/profesores.
+	5.	Asignar alumnos a asignaturas:
+	•	Se recorre el array de alumnos.
+	•	Para cada uno, se hace un POST con su DNI al endpoint /asignaturas/{acronimo}/alumnos.
+	•	La asignatura también se asigna de forma rotativa.
+	6. Asignar notas aleatorias a los alumnos
+	•	Esta sección recorre todas las asignaturas existentes y, para cada una, realiza los siguientes pasos:
+	•	Obtener la lista de asignaturas desde la API usando la clave de administrador.
+	•	Por cada asignatura:
+	•	Se extrae su acrónimo para identificarla.
+	•	Se solicita al endpoint correspondiente el listado de profesores asociados y se toma únicamente el primer profesor de la lista.
+	•	Usando una función auxiliar get_password, se obtiene la contraseña de ese profesor (o un valor por defecto si no se encuentra) y se ejecuta un login para recibir su propia clave (PKEY).
+	•	Con PKEY, se solicita el listado de alumnos matriculados en esa asignatura.
+	•	Para cada alumno, se genera un número decimal aleatorio entre 0.0 y 10.0 (con un decimal) y se envía un PUT al endpoint de notas, pasando únicamente la cadena de texto con la nota.
+	•	Se imprime en verde una confirmación si la API devuelve un código de éxito (200 ó 201), o en rojo un mensaje de error con el código HTTP devuelto.
+	•	Finalmente, se limpia el archivo temporal que almacenaba las cookies de sesión del profesor para evitar interferencias en la siguiente iteración.
+
+Mensajes por terminal:
+	•	El script imprime los resultados de cada operación utilizando colores ANSI:
+	•	Verde: operación completada con éxito (por ejemplo, “Se han añadido todos los alumnos”).
+	•	Rojo: resumen de errores si no se completó el 100% de las inserciones.
+	•	Naranja: mensajes de error individuales con los datos problemáticos, para facilitar la depuración.
+
+Comandos principales usados:
+	•	curl: para enviar peticiones HTTP POST.
+	•	jq: para extraer campos de los objetos JSON (como el dni o acronimo).
+	•	estructuras de control for, if y operadores como ((…)) para contadores.
+
+Este script es útil para automatizar la carga inicial de datos en entornos de desarrollo o pruebas, garantizando además que los mensajes de salida sean claros y detecten errores fácilmente.
